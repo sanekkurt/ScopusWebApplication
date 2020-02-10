@@ -7,6 +7,6 @@ namespace ScopusWebApplication.Models
 {
     public class Receiving
     {
-        public int authorID { get; set; }
+        public string authorID { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using ScopusWebApplication.Models;
+using ScopusWebApplication.Parsing;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,8 +18,10 @@ namespace ScopusWebApplication.Controllers
         [HttpPost]
         public string Index(Receiving receiving)
         {
-
-            return receiving.authorID.ToString();
+            List<Article> test = new List<Article>();
+            var v = new Request();
+            test = v.get_article_by_author_id(receiving.authorID);
+            return test.ToString();
         }
         public ActionResult About()
         {
