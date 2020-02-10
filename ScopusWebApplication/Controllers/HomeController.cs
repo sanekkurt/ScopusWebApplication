@@ -16,13 +16,15 @@ namespace ScopusWebApplication.Controllers
         }
 
         [HttpPost]
-        public string Index(Receiving receiving)
+        public ActionResult Index(Receiving receiving)
         {
             List<Article> test = new List<Article>();
             var v = new Request();
             test = v.get_article_by_author_id(receiving.authorID);
-            return test.ToString();
+            ViewBag.Test = test;
+            return View("EditArticle");
         }
+
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";

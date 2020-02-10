@@ -1,0 +1,14 @@
+﻿
+@{
+    ViewBag.Title = "EditArticle";
+}
+
+<h3>Полученные статьи автора:</h3>
+<ul>
+    @foreach(var b in ViewBag.Test)
+    {
+        
+            <li>@b.title</li>
+        
+    }
+</ul>
