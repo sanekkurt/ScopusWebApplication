@@ -25,13 +25,16 @@ namespace ScopusWebApplication.Controllers
             return View(test);
         }
 
+        [HttpPost]
         public FilePathResult GetFile(List<Article> articles)
         {
             SaveDocument saveDocument = new SaveDocument();
             saveDocument.gost(articles);
-            string file_path = Server.MapPath("~/Fiels/test.doc");
-            string file_type = "application/pdf";
-            return File(file_path, file_type);
+            string file_path = "D:\\test.doc";
+            //string file_path = Server.MapPath("~/Fiels/test.doc");
+            string file_type = "application/doc";
+            string file_name = "test.doc";
+            return File(file_path, file_type, file_name);
         }
 
         public ActionResult About()

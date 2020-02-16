@@ -8,33 +8,53 @@
 <h3>Полученные статьи автора:</h3>
 
 
+<!--    <ul>
+        @foreach (var b in Model)
+        {
 
-<ul>
-    @foreach (var b in Model)
+            <li>
+                <p>
+                    <b>Авторы: </b>
+                    @foreach (var c in b.authors)
+                    {
+                        @c.Surname
+                    }
+                </p>
+                <p><b>Название статьи:</b> @b.title</p>
+                <p><b>Название журнала:</b> @b.journal</p>
+                <p><b>Год публикации:</b> @b.year</p>
+                <p><b>Том журнала или книги:</b> @b.volume</p>
+                <p><b>Номер журнала:</b> @b.number</p>
+                <p><b>Номера страниц:</b> @b.pages</p>
+                <p><b>Месяц публикации:</b> @b.month</p>
+                <p><b>Цифровой идентификатор статьи:</b> @b.doi</p>
+            </li>
+        }
+    </ul> -->
+
+
+@using (Html.BeginForm("GetFile", "Home", FormMethod.Post))
+{
+
+    for (int i = 0; i < Model.Count; i++)
     {
+        for (int j = 0; j < Model[i].authors.Length; j++)
+        {
+            @: author.CeInitials: @Html.EditorFor(m => m[i].authors[j].CeInitials)
+            @: author.Surname: @Html.EditorFor(m => m[i].authors[j].Surname)
+        }
 
-        <li>
-            <p>
-                <b>Авторы: </b>
-                @foreach (var c in b.authors)
-                {
-                    @c.Surname
-                }
-            </p>
-            <p><b>Название статьи:</b> @b.title</p>
-            <p><b>Название журнала:</b> @b.journal</p>
-            <p><b>Год публикации:</b> @b.year</p>
-            <p><b>Том журнала или книги:</b> @b.volume</p>
-            <p><b>Номер журнала:</b> @b.number</p>
-            <p><b>Номера страниц:</b> @b.pages</p>
-            <p><b>Месяц публикации:</b> @b.month</p>
-            <p><b>Цифровой идентификатор статьи:</b> @b.doi</p>
-        </li>
+        @: title: @Html.EditorFor(m => m[i].title)
+        @: journal: @Html.EditorFor(m => m[i].journal)
+        @: year: @Html.EditorFor(m => m[i].year)
+        @: volume: @Html.EditorFor(m => m[i].volume)
+        @: number: @Html.EditorFor(m => m[i].number)
+        @: pages: @Html.EditorFor(m => m[i].pages)
+        @: month: @Html.EditorFor(m => m[i].month)
+        @: doi: @Html.EditorFor(m => m[i].doi)
 
 
     }
-</ul>
+    <input type="submit" />
+}
 
-
-
-<li>@Html.ActionLink("Скачать гост файл", "GetFile", "Home")</li>
