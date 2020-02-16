@@ -61,13 +61,13 @@ namespace ScopusWebApplication.Parsing
 
                 int count = jsonWebDataArticle.AbstractsRetrievalResponse.Authors.Author.Length;
 
-                article.authors = new string[count];
+                article.authors = new AuthorInArticle[count];
 
                 for (int j = 0; j < count; j++)
                 {
-                    article.authors[j] = jsonWebDataArticle.AbstractsRetrievalResponse.Authors.Author[j].CeSurname;
-                    article.authors[j] = article.authors[j].Insert(article.authors[j].Length, " ");
-                    article.authors[j] = article.authors[j].Insert(article.authors[j].Length, jsonWebDataArticle.AbstractsRetrievalResponse.Authors.Author[j].CeInitials);
+                    article.authors[j] = new AuthorInArticle();
+                    article.authors[j].CeInitials = jsonWebDataArticle.AbstractsRetrievalResponse.Authors.Author[j].CeInitials;
+                    article.authors[j].Surname = jsonWebDataArticle.AbstractsRetrievalResponse.Authors.Author[j].CeSurname;
                 }
 
                 try

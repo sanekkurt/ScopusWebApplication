@@ -1,9 +1,6 @@
 ﻿using ScopusWebApplication.Models;
 using ScopusWebApplication.Parsing;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace ScopusWebApplication.Controllers
@@ -24,6 +21,8 @@ namespace ScopusWebApplication.Controllers
             ViewBag.Test = test;
             return View("EditArticle");
         }
+
+        
 
         public ActionResult About()
         {

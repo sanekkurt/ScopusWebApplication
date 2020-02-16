@@ -7,7 +7,7 @@ namespace ScopusWebApplication.Models
 {
     public class Article
     {
-        public string[] authors { get; set; } // Имена авторов
+        public AuthorInArticle[] authors { get; set; } // Имена авторов
         public string title { get; set; } // Название работы
         public string journal { get; set; } // Название журнала, содержащего статью
         public string year { get; set; } // Год публикации (если не опубликовано — создания)
