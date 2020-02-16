@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using Word = Microsoft.Office.Interop.Word;
 
-namespace JsonParsing
+namespace ScopusWebApplication.Save
 {
     class SaveDocument
     {

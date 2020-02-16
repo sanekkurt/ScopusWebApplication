@@ -24,7 +24,7 @@ namespace ScopusWebApplication.Parsing
             string text = sr.ReadToEnd();
             resp.Close();
             sr.Close();
-            using (var sw = new StreamWriter("~/Files/page1.html"))
+            using (var sw = new StreamWriter("D://page1.html"))
                 sw.Write(text);
             return text;
 

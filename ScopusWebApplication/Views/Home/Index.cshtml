@@ -1,11 +1,14 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
+
+
 <div>
     <h3>Страница получения статей автора с базы данных Scopus</h3>
-    <form method="post">
+    <form method="post" action="~/Home/EditArticle">
         <p>Введите идентификатор автора: </p>
-        <input type="text" name="authorID"/>
-        <input type="submit" value="Найти"/>
+        <input type="text" name="authorID" />
+        <input type="submit" value="Найти" />
     </form>
 </div>
+

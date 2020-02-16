@@ -1,30 +1,40 @@
-﻿
+﻿@using ScopusWebApplication.Models
+@model List<ScopusWebApplication.Models.Article>
+
 @{
     ViewBag.Title = "EditArticle";
 }
 
 <h3>Полученные статьи автора:</h3>
+
+
+
 <ul>
-    @foreach(var b in ViewBag.Test)
+    @foreach (var b in Model)
     {
-        
-    <li>
-        <p><b>Авторы: </b>
-            @foreach (var c in b.authors)
-            {
-                @c.Surname
-            }
-        </p>
-        <p><b>Название статьи:</b> @b.title</p>
-        <p><b>Название журнала:</b> @b.journal</p>
-        <p><b>Год публикации:</b> @b.year</p>
-        <p><b>Том журнала или книги:</b> @b.volume</p>
-        <p><b>Номер журнала:</b> @b.number</p>
-        <p><b>Номера страниц:</b> @b.pages</p>
-        <p><b>Месяц публикации:</b> @b.month</p>
-        <p><b>Цифровой идентификатор статьи:</b> @b.doi</p>
-    </li>
-            
-        
+
+        <li>
+            <p>
+                <b>Авторы: </b>
+                @foreach (var c in b.authors)
+                {
+                    @c.Surname
+                }
+            </p>
+            <p><b>Название статьи:</b> @b.title</p>
+            <p><b>Название журнала:</b> @b.journal</p>
+            <p><b>Год публикации:</b> @b.year</p>
+            <p><b>Том журнала или книги:</b> @b.volume</p>
+            <p><b>Номер журнала:</b> @b.number</p>
+            <p><b>Номера страниц:</b> @b.pages</p>
+            <p><b>Месяц публикации:</b> @b.month</p>
+            <p><b>Цифровой идентификатор статьи:</b> @b.doi</p>
+        </li>
+
+
     }
 </ul>
+
+
+
+<li>@Html.ActionLink("Скачать гост файл", "GetFile", "Home")</li>
