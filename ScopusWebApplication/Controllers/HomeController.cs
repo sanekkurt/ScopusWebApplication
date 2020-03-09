@@ -26,15 +26,56 @@ namespace ScopusWebApplication.Controllers
         }
 
         [HttpPost]
-        public FilePathResult GetFile(List<Article> articles)
+        public FilePathResult GetFile(List<Article> articles, string typeOutput)
         {
+            string file_path = "";
+            string file_type = "";
+            string file_name = "";
             SaveDocument saveDocument = new SaveDocument();
-            saveDocument.gost(articles);
-            string file_path = "D:\\test.doc";
-            //string file_path = Server.MapPath("~/Fiels/test.doc");
-            string file_type = "application/doc";
-            string file_name = "test.doc";
-            return File(file_path, file_type, file_name);
+            if(typeOutput == "BibTex")
+            {
+                saveDocument.BibTex(articles);
+                file_path = "D:\\bibtex.bib";
+                file_type = "application/bib";
+                file_name = "Articles_BibTex.bib";
+                return File(file_path, file_type, file_name);
+            }
+            else
+            {
+                switch (typeOutput)
+                {
+                    case "gost":
+                        saveDocument.gost(articles);
+                        file_name = "Articles_gost.doc";
+                        break;
+                    case "vak":
+                        saveDocument.vak(articles);
+                        file_name = "Articles_vak.doc";
+                        break;
+                    case "IEEE_conferences":
+                        saveDocument.IEEE_conferences(articles);
+                        file_name = "Articles_IEEE_conferences.doc";
+                        break;
+                    case "IEEE_openJournal":
+                        saveDocument.IEEE_openJournal(articles);
+                        file_name = "Articles_IEEE_openJournal.doc";
+                        break;
+                    case "harvardStyle":
+                        saveDocument.harvardStyle(articles);
+                        file_name = "Articles_harvardStyle.doc";
+                        break;
+                    case "springerLNCS":
+                        saveDocument.springerLNCS(articles);
+                        file_name = "Articles_springerLNCS.doc";
+                        break;
+
+                }
+
+                file_path = "D:\\test.doc";
+                file_type = "application/doc";
+                return File(file_path, file_type, file_name);
+            }
+            
         }
 
         public ActionResult About()

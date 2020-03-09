@@ -8,29 +8,6 @@
 <h3>Полученные статьи автора:</h3>
 
 
-<!--    <ul>
-        @foreach (var b in Model)
-        {
-
-            <li>
-                <p>
-                    <b>Авторы: </b>
-                    @foreach (var c in b.authors)
-                    {
-                        @c.Surname
-                    }
-                </p>
-                <p><b>Название статьи:</b> @b.title</p>
-                <p><b>Название журнала:</b> @b.journal</p>
-                <p><b>Год публикации:</b> @b.year</p>
-                <p><b>Том журнала или книги:</b> @b.volume</p>
-                <p><b>Номер журнала:</b> @b.number</p>
-                <p><b>Номера страниц:</b> @b.pages</p>
-                <p><b>Месяц публикации:</b> @b.month</p>
-                <p><b>Цифровой идентификатор статьи:</b> @b.doi</p>
-            </li>
-        }
-    </ul> -->
 
 
 @using (Html.BeginForm("GetFile", "Home", FormMethod.Post))
@@ -54,7 +31,18 @@
         @: doi: @Html.EditorFor(m => m[i].doi)
 
 
+
+
     }
+<select name="typeOutput">
+    <option value="gost">ГОСТ 7.1-2003 + ГОСТ Р 7.0.5-2008</option>
+    <option value="vak">ВАК-формат</option>
+    <option value="IEEE_conferences">IEEE конференции</option>
+    <option value="IEEE_openJournal">IEEE открытые журналы</option>
+    <option value="harvardStyle">Гарвардский стиль</option>
+    <option value="springerLNCS">Springer LNCS</option>
+    <option value="BibTex">BibTex</option>
+</select>
     <input type="submit" />
 }
 
