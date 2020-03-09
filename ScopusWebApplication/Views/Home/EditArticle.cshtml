@@ -12,37 +12,36 @@
 
 @using (Html.BeginForm("GetFile", "Home", FormMethod.Post))
 {
-
-    for (int i = 0; i < Model.Count; i++)
-    {
-        for (int j = 0; j < Model[i].authors.Length; j++)
+    <ul>
+        @for (int i = 0; i < Model.Count; i++)
         {
-            @: author.CeInitials: @Html.EditorFor(m => m[i].authors[j].CeInitials)
-            @: author.Surname: @Html.EditorFor(m => m[i].authors[j].Surname)
+            for (int j = 0; j < Model[i].authors.Length; j++)
+            {
+                <li>Инициалы: @Html.EditorFor(m => m[i].authors[j].CeInitials)</li>
+                <li>Фамилия автора: @Html.EditorFor(m => m[i].authors[j].Surname)</li>
+            }
+
+            <li>Название статьи: @Html.EditorFor(m => m[i].title)</li>
+            <li>Название журнала: @Html.EditorFor(m => m[i].journal)</li>
+            <li>Год: @Html.EditorFor(m => m[i].year)</li>
+            <li>Том журнала или книги: @Html.EditorFor(m => m[i].volume)</li>
+            <li>Номер журнала: @Html.EditorFor(m => m[i].number)</li>
+            <li>Номера страниц: @Html.EditorFor(m => m[i].pages)</li>
+            <li>Месяц публикации: @Html.EditorFor(m => m[i].month)</li>
+            <li>Цифровой идентификатор: @Html.EditorFor(m => m[i].doi)</li>
+            <p></p>
+
         }
-
-        @: title: @Html.EditorFor(m => m[i].title)
-        @: journal: @Html.EditorFor(m => m[i].journal)
-        @: year: @Html.EditorFor(m => m[i].year)
-        @: volume: @Html.EditorFor(m => m[i].volume)
-        @: number: @Html.EditorFor(m => m[i].number)
-        @: pages: @Html.EditorFor(m => m[i].pages)
-        @: month: @Html.EditorFor(m => m[i].month)
-        @: doi: @Html.EditorFor(m => m[i].doi)
-
-
-
-
-    }
-<select name="typeOutput">
-    <option value="gost">ГОСТ 7.1-2003 + ГОСТ Р 7.0.5-2008</option>
-    <option value="vak">ВАК-формат</option>
-    <option value="IEEE_conferences">IEEE конференции</option>
-    <option value="IEEE_openJournal">IEEE открытые журналы</option>
-    <option value="harvardStyle">Гарвардский стиль</option>
-    <option value="springerLNCS">Springer LNCS</option>
-    <option value="BibTex">BibTex</option>
-</select>
-    <input type="submit" />
+    </ul>
+    <select name="typeOutput">
+        <option value="gost">ГОСТ 7.1-2003 + ГОСТ Р 7.0.5-2008</option>
+        <option value="vak">ВАК-формат</option>
+        <option value="IEEE_conferences">IEEE конференции</option>
+        <option value="IEEE_openJournal">IEEE открытые журналы</option>
+        <option value="harvardStyle">Гарвардский стиль</option>
+        <option value="springerLNCS">Springer LNCS</option>
+        <option value="BibTex">BibTex</option>
+    </select>
+    <input type="submit" value="Скачать" />
 }
 
