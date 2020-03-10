@@ -30,7 +30,28 @@ namespace ScopusWebApplication.Parsing
 
         }
 
-        public List<Article> get_article_by_author_id(string id)
+        public MainAuthorInfo Get_Main_Author_Info_By_author_id(string id)
+        {
+            var reb = new Request();
+
+            var mainAuthor = reb.get_http("https://api.elsevier.com/content/search/author?query=AU-ID(" + id + ")&field=surname,given-name,prism:url,eid,orcid,document-count,affiliation-name,affiliation-city,affiliation-country");
+
+            var jsonWebDataMainAuthorInfo = JsonWebDataMainAuthorInfo.FromJson(mainAuthor);
+
+            MainAuthorInfo mainAuthorInfo = new MainAuthorInfo();
+            mainAuthorInfo.Surname = jsonWebDataMainAuthorInfo.SearchResults.Entry[0].PreferredName.Surname;
+            mainAuthorInfo.GivenName = jsonWebDataMainAuthorInfo.SearchResults.Entry[0].PreferredName.GivenName;
+            mainAuthorInfo.Eid = jsonWebDataMainAuthorInfo.SearchResults.Entry[0].Eid;
+            mainAuthorInfo.Orcid = jsonWebDataMainAuthorInfo.SearchResults.Entry[0].Orcid;
+            mainAuthorInfo.PrismUrl = jsonWebDataMainAuthorInfo.SearchResults.Entry[0].PrismUrl;
+            mainAuthorInfo.DocumentCount = jsonWebDataMainAuthorInfo.SearchResults.Entry[0].DocumentCount.ToString();
+            mainAuthorInfo.AffiliationCity = jsonWebDataMainAuthorInfo.SearchResults.Entry[0].AffiliationCurrent.AffiliationCity;
+            mainAuthorInfo.AffiliationCountry = jsonWebDataMainAuthorInfo.SearchResults.Entry[0].AffiliationCurrent.AffiliationCountry;
+            mainAuthorInfo.AffiliationName = jsonWebDataMainAuthorInfo.SearchResults.Entry[0].AffiliationCurrent.AffiliationName;
+            return mainAuthorInfo;
+        }
+
+        public List<Article> Get_article_by_author_id(string id)
         {
             int len; // количество ссылок на статьи в идентификаторе автора
             string data;

@@ -130,9 +130,11 @@
     </Compile>
     <Compile Include="Models\Article.cs" />
     <Compile Include="Models\AuthorInArticle.cs" />
+    <Compile Include="Models\MainAuthorInfo.cs" />
     <Compile Include="Models\Receiving.cs" />
     <Compile Include="Parsing\jsonWebData.cs" />
     <Compile Include="Parsing\JsonWebDataArticle.cs" />
+    <Compile Include="Parsing\jsonWebDataMainAuthorInfo.cs" />
     <Compile Include="Parsing\Request.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Save\SaveDocument.cs" />
