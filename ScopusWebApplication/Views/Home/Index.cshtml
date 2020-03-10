@@ -12,3 +12,10 @@
     </form>
 </div>
 
+@using (Ajax.BeginForm("SearchAuthorInfo", new AjaxOptions { UpdateTargetId = "info", LoadingElementId="Loading", LoadingElementDuration = 500 }))
+{
+    <input type="text" name="authorID" />
+    <input type="submit" value="Найти" />
+}
+<div id="info"></div>
+<img id="Loading" src="@Url.Content("~/Content/Images/load.gif")" style="display:none" />

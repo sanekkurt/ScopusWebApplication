@@ -1,0 +1,81 @@
+﻿@model ScopusWebApplication.Models.MainAuthorInfo
+
+<div>
+    <h4>Основная информация об авторе</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Фамилия:        
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Surname)
+        </dd>
+
+        <dt>
+            Имя:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GivenName)
+        </dd>
+
+        <dt>
+            Ссылка на БД Scopus:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PrismUrl)
+        </dd>
+
+        <dt>
+            Eid:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Eid)
+        </dd>
+
+        <dt>
+            Orcid:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Orcid)
+        </dd>
+
+        <dt>
+            Количество статей:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DocumentCount)
+        </dd>
+
+        <dt>
+            Место работы:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AffiliationName)
+        </dd>
+
+        <dt>
+            Город:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AffiliationCity)
+        </dd>
+
+        <dt>
+            Страна:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AffiliationCountry)
+        </dd>
+
+    </dl>
+</div>
+

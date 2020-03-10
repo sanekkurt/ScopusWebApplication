@@ -14,7 +14,16 @@ namespace ScopusWebApplication.Controllers
             return View();
         }
 
-        
+        [HttpPost]
+        public ActionResult SearchAuthorInfo(Receiving receiving)
+        {
+            var v = new Request();
+            MainAuthorInfo authorInfo = new MainAuthorInfo();
+            authorInfo = v.Get_Main_Author_Info_By_author_id(receiving.authorID);
+            return PartialView(authorInfo);
+        }
+
+
         [HttpPost]
         public ActionResult EditArticle(Receiving receiving)
         {
