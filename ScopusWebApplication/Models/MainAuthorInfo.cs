@@ -11,6 +11,7 @@ namespace ScopusWebApplication.Models
         public string Surname { get; set; }
         public string GivenName { get; set; }
         public string PrismUrl { get; set; }
+        public string Id { get; set; }
         public string Eid { get; set; }
         public string Orcid { get; set; }
         public string DocumentCount { get; set; }

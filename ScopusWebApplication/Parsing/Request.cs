@@ -34,7 +34,7 @@ namespace ScopusWebApplication.Parsing
         {
             var reb = new Request();
 
-            var mainAuthor = reb.get_http("https://api.elsevier.com/content/search/author?query=AU-ID(" + id + ")&field=surname,given-name,prism:url,eid,orcid,document-count,affiliation-name,affiliation-city,affiliation-country");
+            var mainAuthor = reb.get_http("https://api.elsevier.com/content/search/author?query=AU-ID(" + id + ")&field=surname,given-name,prism:url,eid,orcid,document-count,affiliation-name,affiliation-city,affiliation-country,dc:identifier");
 
             var jsonWebDataMainAuthorInfo = JsonWebDataMainAuthorInfo.FromJson(mainAuthor);
 
@@ -48,6 +48,7 @@ namespace ScopusWebApplication.Parsing
             mainAuthorInfo.AffiliationCity = jsonWebDataMainAuthorInfo.SearchResults.Entry[0].AffiliationCurrent.AffiliationCity;
             mainAuthorInfo.AffiliationCountry = jsonWebDataMainAuthorInfo.SearchResults.Entry[0].AffiliationCurrent.AffiliationCountry;
             mainAuthorInfo.AffiliationName = jsonWebDataMainAuthorInfo.SearchResults.Entry[0].AffiliationCurrent.AffiliationName;
+            mainAuthorInfo.Id = jsonWebDataMainAuthorInfo.SearchResults.Entry[0].DcIdentifier.Remove(0, 10);
             return mainAuthorInfo;
         }
 

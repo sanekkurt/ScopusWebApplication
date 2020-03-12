@@ -5,7 +5,7 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            Фамилия:        
+            Фамилия:
         </dt>
 
         <dd>
@@ -77,5 +77,11 @@
         </dd>
 
     </dl>
+
 </div>
 
+@using (Html.BeginForm("EditArticle", "Home", FormMethod.Post))
+{    
+    <input type="hidden" name="authorID" value=@Model.Id />
+    <input type="submit" value="Найти статьи" />
+}

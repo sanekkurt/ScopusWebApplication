@@ -1,21 +1,15 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
+<p></p>
+<h3>Парсинг статей автора с сайта Scopus</h3>
 
-
-<div>
-    <h3>Страница получения статей автора с базы данных Scopus</h3>
-    <form method="post" action="~/Home/EditArticle">
-        <p>Введите идентификатор автора: </p>
-        <input type="text" name="authorID" />
-        <input type="submit" value="Найти" />
-    </form>
-</div>
-
-@using (Ajax.BeginForm("SearchAuthorInfo", new AjaxOptions { UpdateTargetId = "info", LoadingElementId="Loading", LoadingElementDuration = 500 }))
+@using (Ajax.BeginForm("SearchAuthorInfo", new AjaxOptions { UpdateTargetId = "info", LoadingElementId = "Loading", LoadingElementDuration = 500 }))
 {
+    <p></p>
+    <P>Введите ID автора</P>
     <input type="text" name="authorID" />
-    <input type="submit" value="Найти" />
+    <input type="submit" name="Найти" />
 }
 <div id="info"></div>
 <img id="Loading" src="@Url.Content("~/Content/Images/load.gif")" style="display:none" />

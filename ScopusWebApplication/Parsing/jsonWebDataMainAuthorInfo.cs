@@ -19,11 +19,11 @@ namespace QuickType
         public SearchResults SearchResults { get; set; }
     }
 
-    
+
 
     public partial class Entry
     {
-        
+
         [JsonProperty("eid")]
         public string Eid { get; set; }
 
@@ -62,15 +62,12 @@ namespace QuickType
         public string GivenName { get; set; }
     }
 
-   
+
 
     public partial class JsonWebDataMainAuthorInfo
     {
         public static JsonWebDataMainAuthorInfo FromJson(string json) => JsonConvert.DeserializeObject<JsonWebDataMainAuthorInfo>(json, QuickType.Converter.Settings);
     }
 
-    
 
-       
-    
 }
