@@ -562,7 +562,8 @@ namespace ScopusWebApplication.Save
                     Number = number,
                     Author = authors,
                     Pages = formatPages,
-                    Month = numberMonthInBibtex(month)
+                    Month = numberMonthInBibtex(month),
+                    CitationKey = i + GetCitationKey(articles[i])
                 };
             }
 
@@ -591,6 +592,17 @@ namespace ScopusWebApplication.Save
             }
         }
 
+        //Метод для получения CitationKey в BibTex
+        public string GetCitationKey(Article article)
+        {
+            string citationKey = "";
+            for (int i = 0; i < article.authors.Length; i++)
+            {
+                citationKey = citationKey + article.authors[i].Surname.Substring(0, 3).ToUpper();
+            }
+            citationKey = citationKey + article.year.Remove(4) + article.month.Substring(5, 2);
+            return citationKey;
+        }
         //Метод для возвращения названий месяцев по числам
         public static string numberMonthInFullWord(string number)
         {
