@@ -2,37 +2,70 @@
 @model List<ScopusWebApplication.Models.Article>
 
 @{
+    /**/
+
     ViewBag.Title = "EditArticle";
 }
 
 <h3>Полученные статьи автора:</h3>
 
 
-
-
 @using (Html.BeginForm("GetFile", "Home", FormMethod.Post))
 {
-    <ul>
-        @for (int i = 0; i < Model.Count; i++)
-        {
-            for (int j = 0; j < Model[i].authors.Length; j++)
-            {
-                <li>Инициалы: @Html.EditorFor(m => m[i].authors[j].CeInitials)</li>
-                <li>Фамилия автора: @Html.EditorFor(m => m[i].authors[j].Surname)</li>
-            }
 
-            <li>Название статьи: @Html.EditorFor(m => m[i].title)</li>
-            <li>Название журнала: @Html.EditorFor(m => m[i].journal)</li>
-            <li>Год: @Html.EditorFor(m => m[i].year)</li>
-            <li>Том журнала или книги: @Html.EditorFor(m => m[i].volume)</li>
-            <li>Номер журнала: @Html.EditorFor(m => m[i].number)</li>
-            <li>Номера страниц: @Html.EditorFor(m => m[i].pages)</li>
-            <li>Месяц публикации: @Html.EditorFor(m => m[i].month)</li>
-            <li>Цифровой идентификатор: @Html.EditorFor(m => m[i].doi)</li>
-            <p></p>
+    for (int i = 0; i < Model.Count; i++)
+    {
+        <div class="container">
+            <div class="header">
+                <p style="cursor:pointer">@Model[i].title <span class="down_arrow">▼</span></p>
+            </div>
+            <div class="content" style="display: none">
+                <ul>
+                    @for (int j = 0; j < Model[i].authors.Length; j++)
+                    {
+                        <li>Инициалы: @Html.EditorFor(m => m[i].authors[j].CeInitials)</li>
+                        <li>Фамилия автора: @Html.EditorFor(m => m[i].authors[j].Surname)</li>
+                    }
 
-        }
-    </ul>
+                    <li>Название статьи: @Html.EditorFor(m => m[i].title)</li>
+                    <li>Название журнала: @Html.EditorFor(m => m[i].journal)</li>
+                    <li>Год: @Html.EditorFor(m => m[i].year)</li>
+                    <li>Том журнала или книги: @Html.EditorFor(m => m[i].volume)</li>
+                    <li>Номер журнала: @Html.EditorFor(m => m[i].number)</li>
+                    <li>Номера страниц: @Html.EditorFor(m => m[i].pages)</li>
+                    <li>Месяц публикации: @Html.EditorFor(m => m[i].month)</li>
+                    <li>Цифровой идентификатор: @Html.EditorFor(m => m[i].doi)</li>
+                    <p></p>
+                </ul>
+            </div>
+        </div>
+    }
+
+
+    <script type="text/javascript">
+        $(".header").click(function () {
+
+            var header = $(this);
+            //getting the next element
+            var content = header.next();
+            //open up the content needed - toggle the slide- if visible, slide up, if not slidedown.
+            content.slideToggle(500, function () {
+                header.find("span").text(function () {                    
+                    var t = "";
+                    if (content.is(":visible")) {
+                        t = "▲";
+                    }
+                    else {
+                        t = "▼";
+                    }
+                    return t;
+                });
+            });
+        });
+
+
+    </script>
+
     <select name="typeOutput">
         <option value="gost">ГОСТ 7.1-2003 + ГОСТ Р 7.0.5-2008</option>
         <option value="vak">ВАК-формат</option>
