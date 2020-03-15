@@ -30,7 +30,7 @@ namespace ScopusWebApplication.Controllers
             var v = new Request();
             List<Article> test = new List<Article>();
             test = v.Get_article_by_author_id(receiving.authorID);
-            //ViewBag.Test = test;
+            //ViewBag.Test = test;            
             return View(test);
         }
 

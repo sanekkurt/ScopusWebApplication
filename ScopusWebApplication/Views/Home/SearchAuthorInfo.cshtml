@@ -80,8 +80,24 @@
 
 </div>
 
-@using (Html.BeginForm("EditArticle", "Home", FormMethod.Post))
-{    
-    <input type="hidden" name="authorID" value=@Model.Id />
-    <input type="submit" value="Найти статьи" />
-}
+
+<div id="form_">
+    <form method="post" action="~/Home/EditArticle">
+        <input type="hidden" name="authorID" value=@Model.Id />
+        <input type="submit" value="Найти статьи" />
+    </form>
+</div>
+<br/>
+<img id="loadingIMG" src="@Url.Content("~/Content/Images/loading.gif")" style="display:none; width: 5%; height: 5%;" />
+<h4 id="loadingText" style="display:none">Загрузка статей, подождите...</h4>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#form_").submit(function (event) {            
+            $("#loadingText").fadeIn(1000);
+            $("#loadingIMG").fadeIn(1000);
+        });
+    });
+
+    
+</script>
