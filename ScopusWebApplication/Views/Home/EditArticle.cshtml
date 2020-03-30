@@ -16,9 +16,11 @@
     for (int i = 0; i < Model.Count; i++)
     {
         <div class="container">
+            @Html.EditorFor(m => m[i].choose)
             <div class="header">
                 <p style="cursor:pointer">@Model[i].title <span class="down_arrow">▼</span></p>
             </div>
+
             <div class="content" style="display: none">
                 <ul>
                     @for (int j = 0; j < Model[i].authors.Length; j++)
@@ -50,7 +52,7 @@
             var content = header.next();
             //open up the content needed - toggle the slide- if visible, slide up, if not slidedown.
             content.slideToggle(500, function () {
-                header.find("span").text(function () {                    
+                header.find("span").text(function () {
                     var t = "";
                     if (content.is(":visible")) {
                         t = "▲";

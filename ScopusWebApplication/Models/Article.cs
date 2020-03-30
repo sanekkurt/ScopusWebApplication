@@ -16,5 +16,10 @@ namespace ScopusWebApplication.Models
         public string pages { get; set; } // Номера страниц, разделённые запятыми или двойным дефисом. Для книги — общее количество страниц.
         public string month { get; set; } // Месяц публикации (может содержать дату). Если не опубликовано — создания.
         public string doi { get; set; } // Цифровой идентификатор объекта
+        public bool choose { get; set; } // Выбор
+        public Article()
+        {
+            choose = true;
+        }
     }
 }

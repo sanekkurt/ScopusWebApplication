@@ -8,8 +8,11 @@
 {
     <p></p>
     <P>Введите ID автора</P>
-    <input type="text" name="authorID" />
-    <input type="submit" name="Найти" />
+    <div class="input-group">
+        <input class="form-control" type="text" name="authorID" />
+        <input class="btn btn-secondary" type="submit" name="Найти" />
+    </div>
+    
 }
 <br/>
 <img id="Loading" src="@Url.Content("~/Content/Images/loading.gif")" style="display:none; width: 5%; height: 5%;" />

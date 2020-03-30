@@ -19,87 +19,95 @@ namespace ScopusWebApplication.Save
 
             for (int j = 0; j < articles.Count; j++)
             {
-                //Вывод всех авторов в одну строку с верным форматированием
-                string authors = "";
-                int lenAuthorsArray = articles[j].authors.Length;
-                for (int i = 0; i < lenAuthorsArray; i++)
+                if (articles[j].choose == false)
                 {
-                    if (i != lenAuthorsArray - 1)
+                    continue;
+                }
+                else
+                {
+                    //Вывод всех авторов в одну строку с верным форматированием
+                    string authors = "";
+                    int lenAuthorsArray = articles[j].authors.Length;
+                    for (int i = 0; i < lenAuthorsArray; i++)
                     {
-                        authors = authors.Insert(authors.Length, articles[j].authors[i].Surname + " " + articles[j].authors[i].CeInitials + ", ");
+                        if (i != lenAuthorsArray - 1)
+                        {
+                            authors = authors.Insert(authors.Length, articles[j].authors[i].Surname + " " + articles[j].authors[i].CeInitials + ", ");
+                        }
+                        else
+                        {
+                            authors = authors.Insert(authors.Length, articles[j].authors[i].Surname + " " + articles[j].authors[i].CeInitials + " ");
+                        }
                     }
-                    else
+
+                    //Вывод всех авторов в одну строку, только наоборот и с дополнительными косыми знаками
+                    string authorsReverse = "/ ";
+                    for (int i = 0; i < lenAuthorsArray; i++)
                     {
-                        authors = authors.Insert(authors.Length, articles[j].authors[i].Surname + " " + articles[j].authors[i].CeInitials + " ");
+                        if (i != lenAuthorsArray - 1)
+                        {
+                            authorsReverse = authorsReverse.Insert(authorsReverse.Length, articles[j].authors[i].CeInitials + " " + articles[j].authors[i].Surname + ", ");
+                        }
+                        else
+                        {
+                            authorsReverse = authorsReverse.Insert(authorsReverse.Length, articles[j].authors[i].CeInitials + " " + articles[j].authors[i].Surname + " // ");
+                        }
                     }
+
+                    //Вывод года
+                    string formatYear = " — . — ";
+                    formatYear = formatYear.Insert(3, articles[j].year.Remove(4));
+
+                    //Вывод VOLUME
+                    string formatVolume = "";
+                    if (articles[j].volume != null)
+                    {
+                        if (articles[j].number == null)
+                        {
+                            formatVolume = "Vol. .";
+                        }
+                        else
+                        {
+                            formatVolume = "Vol. , ";
+                        }
+
+                        formatVolume = formatVolume.Insert(5, articles[j].volume);
+                    }
+
+                    //Вывод номера журнала
+                    string formatNumber = "";
+                    if (articles[j].number != null)
+                    {
+                        formatNumber = "№  .";
+                        formatNumber = formatNumber.Insert(2, articles[j].number);
+                    }
+
+                    //Вывод количества страниц
+                    string formatPages = "";
+                    if (articles[j].pages != null)
+                    {
+                        if (articles[j].number == null && articles[j].volume == null)
+                        {
+                            formatPages = "P. .";
+                            formatPages = formatPages.Insert(3, articles[j].pages);
+                        }
+                        else
+                        {
+                            formatPages = " — P. .";
+                            formatPages = formatPages.Insert(6, articles[j].pages);
+                        }
+                        if (formatPages.IndexOf("-") != -1)
+                        {
+                            formatPages = formatPages.Replace("-", "—");
+                        }
+                    }
+
+                    wordParag.Range.Font.Name = "Times New Roman";
+                    wordParag.Range.Font.Size = 14;
+                    wordParag.Range.Text = authors + articles[j].title + " " + authorsReverse + articles[j].journal + "." + formatYear + formatVolume + formatNumber + formatPages;
+                    wordDoc.Paragraphs.Add();
                 }
 
-                //Вывод всех авторов в одну строку, только наоборот и с дополнительными косыми знаками
-                string authorsReverse = "/ ";
-                for (int i = 0; i < lenAuthorsArray; i++)
-                {
-                    if (i != lenAuthorsArray - 1)
-                    {
-                        authorsReverse = authorsReverse.Insert(authorsReverse.Length, articles[j].authors[i].CeInitials + " " + articles[j].authors[i].Surname + ", ");
-                    }
-                    else
-                    {
-                        authorsReverse = authorsReverse.Insert(authorsReverse.Length, articles[j].authors[i].CeInitials + " " + articles[j].authors[i].Surname + " // ");
-                    }
-                }
-
-                //Вывод года
-                string formatYear = " — . — ";
-                formatYear = formatYear.Insert(3, articles[j].year.Remove(4));
-
-                //Вывод VOLUME
-                string formatVolume = "";
-                if (articles[j].volume != null)
-                {
-                    if (articles[j].number == null)
-                    {
-                        formatVolume = "Vol. .";
-                    }
-                    else
-                    {
-                        formatVolume = "Vol. , ";
-                    }
-
-                    formatVolume = formatVolume.Insert(5, articles[j].volume);
-                }
-
-                //Вывод номера журнала
-                string formatNumber = "";
-                if (articles[j].number != null)
-                {
-                    formatNumber = "№  .";
-                    formatNumber = formatNumber.Insert(2, articles[j].number);
-                }
-
-                //Вывод количества страниц
-                string formatPages = "";
-                if (articles[j].pages != null)
-                {
-                    if (articles[j].number == null && articles[j].volume == null)
-                    {
-                        formatPages = "P. .";
-                        formatPages = formatPages.Insert(3, articles[j].pages);
-                    }
-                    else
-                    {
-                        formatPages = " — P. .";
-                        formatPages = formatPages.Insert(6, articles[j].pages);
-                    }
-                    if (formatPages.IndexOf("-") != -1)
-                    {
-                        formatPages = formatPages.Replace("-", "—");
-                    }
-                }
-
-                wordParag.Range.Font.Name = "Times New Roman";
-                wordParag.Range.Font.Size = 14;
-                wordParag.Range.Text = authors + articles[j].title + " " + authorsReverse + articles[j].journal + "." + formatYear + formatVolume + formatNumber + formatPages;
-                wordDoc.Paragraphs.Add();
             }
 
 
@@ -118,71 +126,79 @@ namespace ScopusWebApplication.Save
 
             for (int j = 0; j < articles.Count; j++)
             {
-                //Вывод всех авторов в одну строку с верным форматированием
-                string authors = "";
-                int lenAuthorsArray = articles[j].authors.Length;
-                for (int i = 0; i < lenAuthorsArray; i++)
+                if (articles[j].choose == false)
                 {
-                    if (i != lenAuthorsArray - 1)
-                    {
-                        authors = authors.Insert(authors.Length, articles[j].authors[i].Surname + " " + articles[j].authors[i].CeInitials + ", ");
-                    }
-                    else
-                    {
-                        authors = authors.Insert(authors.Length, articles[j].authors[i].Surname + " " + articles[j].authors[i].CeInitials);
-                    }
-                }
-
-
-
-                //Вывод года
-                string formatJournal = articles[j].journal;
-                if (articles[j].year != null)
-                {
-
-                    formatJournal = formatJournal + ", " + articles[j].year.Remove(4) + ".";
+                    continue;
                 }
                 else
                 {
-                    formatJournal = formatJournal + ".";
-                }
-
-
-                //Вывод VOLUME
-                string formatVolume = "";
-                if (articles[j].volume != null)
-                {
-
-                    formatVolume = "Vol. . ";
-
-                    formatVolume = formatVolume.Insert(5, articles[j].volume);
-                }
-
-                //Вывод номера журнала
-                string formatNumber = "";
-                if (articles[j].number != null)
-                {
-                    formatNumber = "Is. . ";
-                    formatNumber = formatNumber.Insert(4, articles[j].number);
-                }
-
-                //Вывод количества страниц
-                string formatPages = "";
-                if (articles[j].pages != null)
-                {
-                    formatPages = "Pp. .";
-                    formatPages = formatPages.Insert(4, articles[j].pages);
-
-                    if (formatPages.IndexOf("-") != -1)
+                    //Вывод всех авторов в одну строку с верным форматированием
+                    string authors = "";
+                    int lenAuthorsArray = articles[j].authors.Length;
+                    for (int i = 0; i < lenAuthorsArray; i++)
                     {
-                        formatPages = formatPages.Replace("-", "–");
+                        if (i != lenAuthorsArray - 1)
+                        {
+                            authors = authors.Insert(authors.Length, articles[j].authors[i].Surname + " " + articles[j].authors[i].CeInitials + ", ");
+                        }
+                        else
+                        {
+                            authors = authors.Insert(authors.Length, articles[j].authors[i].Surname + " " + articles[j].authors[i].CeInitials);
+                        }
                     }
+
+
+
+                    //Вывод года
+                    string formatJournal = articles[j].journal;
+                    if (articles[j].year != null)
+                    {
+
+                        formatJournal = formatJournal + ", " + articles[j].year.Remove(4) + ".";
+                    }
+                    else
+                    {
+                        formatJournal = formatJournal + ".";
+                    }
+
+
+                    //Вывод VOLUME
+                    string formatVolume = "";
+                    if (articles[j].volume != null)
+                    {
+
+                        formatVolume = "Vol. . ";
+
+                        formatVolume = formatVolume.Insert(5, articles[j].volume);
+                    }
+
+                    //Вывод номера журнала
+                    string formatNumber = "";
+                    if (articles[j].number != null)
+                    {
+                        formatNumber = "Is. . ";
+                        formatNumber = formatNumber.Insert(4, articles[j].number);
+                    }
+
+                    //Вывод количества страниц
+                    string formatPages = "";
+                    if (articles[j].pages != null)
+                    {
+                        formatPages = "Pp. .";
+                        formatPages = formatPages.Insert(4, articles[j].pages);
+
+                        if (formatPages.IndexOf("-") != -1)
+                        {
+                            formatPages = formatPages.Replace("-", "–");
+                        }
+                    }
+
+                    wordParag.Range.Font.Name = "Times New Roman";
+                    wordParag.Range.Font.Size = 14;
+                    wordParag.Range.Text = authors + "et. al. " + articles[j].title + " // " + formatJournal + " " + formatVolume + formatNumber + formatPages;
+                    wordDoc.Paragraphs.Add();
                 }
 
-                wordParag.Range.Font.Name = "Times New Roman";
-                wordParag.Range.Font.Size = 14;
-                wordParag.Range.Text = authors + "et. al. " + articles[j].title + " // " + formatJournal + " " + formatVolume + formatNumber + formatPages;
-                wordDoc.Paragraphs.Add();
             }
 
 
@@ -201,65 +217,74 @@ namespace ScopusWebApplication.Save
 
             for (int j = 0; j < articles.Count; j++)
             {
-                //Вывод всех авторов в одну строку, только наоборот и с дополнительными косыми знаками
-                string authors = "";
-                int lenAuthorsArray = articles[j].authors.Length;
-                for (int i = 0; i < lenAuthorsArray; i++)
+                if (articles[j].choose == false)
                 {
-                    if (i != lenAuthorsArray - 1)
+                    continue;
+                }
+                else
+                {
+                    //Вывод всех авторов в одну строку, только наоборот и с дополнительными косыми знаками
+                    string authors = "";
+                    int lenAuthorsArray = articles[j].authors.Length;
+                    for (int i = 0; i < lenAuthorsArray; i++)
                     {
-                        authors = authors.Insert(authors.Length, articles[j].authors[i].CeInitials + " " + articles[j].authors[i].Surname + ", ");
+                        if (i != lenAuthorsArray - 1)
+                        {
+                            authors = authors.Insert(authors.Length, articles[j].authors[i].CeInitials + " " + articles[j].authors[i].Surname + ", ");
+                        }
+                        else
+                        {
+                            authors = authors.Insert(authors.Length, "and " + articles[j].authors[i].CeInitials + " " + articles[j].authors[i].Surname + ", ");
+                        }
                     }
-                    else
+
+                    //Вывод VOLUME
+                    string formatVolume = "";
+                    if (articles[j].volume != null)
                     {
-                        authors = authors.Insert(authors.Length, "and " + articles[j].authors[i].CeInitials + " " + articles[j].authors[i].Surname + ", ");
+
+                        formatVolume = "vol. , ";
+
+                        formatVolume = formatVolume.Insert(5, articles[j].volume);
                     }
-                }
 
-                //Вывод VOLUME
-                string formatVolume = "";
-                if (articles[j].volume != null)
-                {
-
-                    formatVolume = "vol. , ";
-
-                    formatVolume = formatVolume.Insert(5, articles[j].volume);
-                }
-
-                //Вывод месяца и года
-                string month = "";
-                string year = "";
-                if (articles[j].year != null)
-                {
-                    month = numberMonthInFullWord(articles[j].year.Substring(5, 2));
-                    year = " ";
-                    year = year.Insert(1, articles[j].year.Remove(4));
-                }
-
-                //Вывод количества страниц
-                string formatPages = "";
-                if (articles[j].pages != null)
-                {
+                    //Вывод месяца и года
+                    string month = "";
+                    string year = "";
                     if (articles[j].year != null)
                     {
-                        formatPages = "pp. , ";
+                        month = numberMonthInFullWord(articles[j].year.Substring(5, 2));
+                        year = " ";
+                        year = year.Insert(1, articles[j].year.Remove(4));
                     }
-                    else
-                    {
-                        formatPages = "pp. . ";
-                    }
-                    formatPages = formatPages.Insert(4, articles[j].pages);
 
-                    if (formatPages.IndexOf("-") != -1)
+                    //Вывод количества страниц
+                    string formatPages = "";
+                    if (articles[j].pages != null)
                     {
-                        formatPages = formatPages.Replace("-", "–");
+                        if (articles[j].year != null)
+                        {
+                            formatPages = "pp. , ";
+                        }
+                        else
+                        {
+                            formatPages = "pp. . ";
+                        }
+                        formatPages = formatPages.Insert(4, articles[j].pages);
+
+                        if (formatPages.IndexOf("-") != -1)
+                        {
+                            formatPages = formatPages.Replace("-", "–");
+                        }
                     }
+
+                    wordParag.Range.Font.Name = "Times New Roman";
+                    wordParag.Range.Font.Size = 14;
+                    wordParag.Range.Text = authors + "“" + articles[j].title + "," + "” " + articles[j].journal + ", " + formatVolume + formatPages + month + year;
+                    wordDoc.Paragraphs.Add();
                 }
 
-                wordParag.Range.Font.Name = "Times New Roman";
-                wordParag.Range.Font.Size = 14;
-                wordParag.Range.Text = authors + "“" + articles[j].title + "," + "” " + articles[j].journal + ", " + formatVolume + formatPages + month + year;
-                wordDoc.Paragraphs.Add();
+
             }
 
 
@@ -278,66 +303,74 @@ namespace ScopusWebApplication.Save
 
             for (int j = 0; j < articles.Count; j++)
             {
-                //Вывод всех авторов в одну строку, только наоборот и с дополнительными косыми знаками
-                string authors = "";
-                int lenAuthorsArray = articles[j].authors.Length;
-                for (int i = 0; i < lenAuthorsArray; i++)
+                if (articles[j].choose == false)
                 {
-                    if (i != lenAuthorsArray - 1)
+                    continue;
+                }
+                else
+                {
+                    //Вывод всех авторов в одну строку, только наоборот и с дополнительными косыми знаками
+                    string authors = "";
+                    int lenAuthorsArray = articles[j].authors.Length;
+                    for (int i = 0; i < lenAuthorsArray; i++)
                     {
-                        authors = authors.Insert(authors.Length, articles[j].authors[i].CeInitials + " " + articles[j].authors[i].Surname + ", ");
+                        if (i != lenAuthorsArray - 1)
+                        {
+                            authors = authors.Insert(authors.Length, articles[j].authors[i].CeInitials + " " + articles[j].authors[i].Surname + ", ");
+                        }
+                        else
+                        {
+                            authors = authors.Insert(authors.Length, "and " + articles[j].authors[i].CeInitials + " " + articles[j].authors[i].Surname + ", ");
+                        }
                     }
-                    else
+
+
+                    //Вывод VOLUME
+                    string formatVolume = "";
+                    if (articles[j].volume != null)
                     {
-                        authors = authors.Insert(authors.Length, "and " + articles[j].authors[i].CeInitials + " " + articles[j].authors[i].Surname + ", ");
+
+                        formatVolume = "vol. , ";
+
+                        formatVolume = formatVolume.Insert(5, articles[j].volume);
                     }
-                }
 
-
-                //Вывод VOLUME
-                string formatVolume = "";
-                if (articles[j].volume != null)
-                {
-
-                    formatVolume = "vol. , ";
-
-                    formatVolume = formatVolume.Insert(5, articles[j].volume);
-                }
-
-                //Вывод месяца и года
-                string month = "";
-                string year = "";
-                if (articles[j].year != null)
-                {
-                    month = numberMonthInHalfWord(articles[j].year.Substring(5, 2));
-                    year = " .";
-                    year = year.Insert(1, articles[j].year.Remove(4));
-                }
-
-                //Вывод количества страниц
-                string formatPages = "";
-                if (articles[j].pages != null)
-                {
+                    //Вывод месяца и года
+                    string month = "";
+                    string year = "";
                     if (articles[j].year != null)
                     {
-                        formatPages = "pp. , ";
+                        month = numberMonthInHalfWord(articles[j].year.Substring(5, 2));
+                        year = " .";
+                        year = year.Insert(1, articles[j].year.Remove(4));
                     }
-                    else
-                    {
-                        formatPages = "pp. . ";
-                    }
-                    formatPages = formatPages.Insert(4, articles[j].pages);
 
-                    if (formatPages.IndexOf("-") != -1)
+                    //Вывод количества страниц
+                    string formatPages = "";
+                    if (articles[j].pages != null)
                     {
-                        formatPages = formatPages.Replace("-", "–");
+                        if (articles[j].year != null)
+                        {
+                            formatPages = "pp. , ";
+                        }
+                        else
+                        {
+                            formatPages = "pp. . ";
+                        }
+                        formatPages = formatPages.Insert(4, articles[j].pages);
+
+                        if (formatPages.IndexOf("-") != -1)
+                        {
+                            formatPages = formatPages.Replace("-", "–");
+                        }
                     }
+
+                    wordParag.Range.Font.Name = "Times New Roman";
+                    wordParag.Range.Font.Size = 14;
+                    wordParag.Range.Text = authors + "“" + articles[j].title + "," + "” " + articles[j].journal + ", " + formatVolume + formatPages + month + year;
+                    wordDoc.Paragraphs.Add();
                 }
 
-                wordParag.Range.Font.Name = "Times New Roman";
-                wordParag.Range.Font.Size = 14;
-                wordParag.Range.Text = authors + "“" + articles[j].title + "," + "” " + articles[j].journal + ", " + formatVolume + formatPages + month + year;
-                wordDoc.Paragraphs.Add();
             }
 
 
@@ -356,53 +389,60 @@ namespace ScopusWebApplication.Save
 
             for (int j = 0; j < articles.Count; j++)
             {
-                //Вывод всех авторов в одну строку с верным форматированием + год, если он есть
-                string authors = "";
-                int lenAuthorsArray = articles[j].authors.Length;
-                for (int i = 0; i < lenAuthorsArray; i++)
+                if (articles[j].choose == false)
                 {
-
-                    if (i != lenAuthorsArray - 1 || articles[j].year == null)
-                    {
-                        authors = authors.Insert(authors.Length, articles[j].authors[i].Surname + ", " + articles[j].authors[i].CeInitials.Replace(".", "") + ", ");
-                    }
-                    else
-                    {
-                        if (authors != "")
-                        {
-                            authors = authors.Remove(authors.Length - 2);
-                        }
-                        authors = authors.Insert(authors.Length, " & " + articles[j].authors[i].Surname + ", " + articles[j].authors[i].CeInitials.Replace(".", "") + " " + articles[j].year.Remove(4) + ", ");
-                    }
-                }
-
-                //Вывод VOLUME и форматирование названия журнала в зависимости от того, есть ли том или нет
-                string formatVolume = "";
-                string formatJournal = "";
-                if (articles[j].volume != null)
-                {
-                    formatJournal = articles[j].journal + ", ";
-
-                    formatVolume = "том. . ";
-
-                    formatVolume = formatVolume.Insert(5, articles[j].volume);
+                    continue;
                 }
                 else
                 {
-                    formatJournal = articles[j].journal + ". ";
-                }
+                    //Вывод всех авторов в одну строку с верным форматированием + год, если он есть
+                    string authors = "";
+                    int lenAuthorsArray = articles[j].authors.Length;
+                    for (int i = 0; i < lenAuthorsArray; i++)
+                    {
 
-                //Вывод ссылки на DOI
-                string formatDoi = "";
-                if (articles[j].doi != null)
-                {
-                    formatDoi = "https://dx.doi.org/" + articles[j].doi;
-                }
+                        if (i != lenAuthorsArray - 1 || articles[j].year == null)
+                        {
+                            authors = authors.Insert(authors.Length, articles[j].authors[i].Surname + ", " + articles[j].authors[i].CeInitials.Replace(".", "") + ", ");
+                        }
+                        else
+                        {
+                            if (authors != "")
+                            {
+                                authors = authors.Remove(authors.Length - 2);
+                            }
+                            authors = authors.Insert(authors.Length, " & " + articles[j].authors[i].Surname + ", " + articles[j].authors[i].CeInitials.Replace(".", "") + " " + articles[j].year.Remove(4) + ", ");
+                        }
+                    }
 
-                wordParag.Range.Font.Name = "Times New Roman";
-                wordParag.Range.Font.Size = 14;
-                wordParag.Range.Text = authors + "“" + articles[j].title + "”, " + formatJournal + formatVolume + formatDoi;
-                wordDoc.Paragraphs.Add();
+                    //Вывод VOLUME и форматирование названия журнала в зависимости от того, есть ли том или нет
+                    string formatVolume = "";
+                    string formatJournal = "";
+                    if (articles[j].volume != null)
+                    {
+                        formatJournal = articles[j].journal + ", ";
+
+                        formatVolume = "том. . ";
+
+                        formatVolume = formatVolume.Insert(5, articles[j].volume);
+                    }
+                    else
+                    {
+                        formatJournal = articles[j].journal + ". ";
+                    }
+
+                    //Вывод ссылки на DOI
+                    string formatDoi = "";
+                    if (articles[j].doi != null)
+                    {
+                        formatDoi = "https://dx.doi.org/" + articles[j].doi;
+                    }
+
+                    wordParag.Range.Font.Name = "Times New Roman";
+                    wordParag.Range.Font.Size = 14;
+                    wordParag.Range.Text = authors + "“" + articles[j].title + "”, " + formatJournal + formatVolume + formatDoi;
+                    wordDoc.Paragraphs.Add();
+                }
             }
 
 
@@ -421,82 +461,90 @@ namespace ScopusWebApplication.Save
 
             for (int j = 0; j < articles.Count; j++)
             {
-                //Вывод всех авторов в одну строку с верным форматированием
-                string authors = "";
-                int lenAuthorsArray = articles[j].authors.Length;
-                for (int i = 0; i < lenAuthorsArray; i++)
+                if (articles[j].choose == false)
                 {
-                    if (i != lenAuthorsArray - 1)
-                    {
-                        authors = authors.Insert(authors.Length, articles[j].authors[i].Surname + ", " + articles[j].authors[i].CeInitials + " ");
-                    }
-                    else
-                    {
-                        authors = authors.Insert(authors.Length, articles[j].authors[i].Surname + ", " + articles[j].authors[i].CeInitials + ": ");
-                    }
-                }
-
-
-                //Вывод имени журнала с пробелом или без, в зависимости от того есть ли доп поля или нет
-                string formatJournal = "";
-                if (articles[j].volume != null || articles[j].number != null)
-                {
-                    formatJournal = articles[j].journal + " ";
+                    continue;
                 }
                 else
                 {
-                    formatJournal = articles[j].journal;
-                }
-
-
-                //Вывод VOLUME + номер журнала
-                string formatVolume = "";
-                if (articles[j].volume != null)
-                {
-                    formatVolume = articles[j].volume;
-                }
-
-                string formatNumber = "";
-                if (articles[j].number != null)
-                {
-                    if (articles[j].volume != null)
+                    //Вывод всех авторов в одну строку с верным форматированием
+                    string authors = "";
+                    int lenAuthorsArray = articles[j].authors.Length;
+                    for (int i = 0; i < lenAuthorsArray; i++)
                     {
-                        formatNumber = "()";
-                        formatNumber = formatNumber.Insert(1, articles[j].number);
+                        if (i != lenAuthorsArray - 1)
+                        {
+                            authors = authors.Insert(authors.Length, articles[j].authors[i].Surname + ", " + articles[j].authors[i].CeInitials + " ");
+                        }
+                        else
+                        {
+                            authors = authors.Insert(authors.Length, articles[j].authors[i].Surname + ", " + articles[j].authors[i].CeInitials + ": ");
+                        }
+                    }
+
+
+                    //Вывод имени журнала с пробелом или без, в зависимости от того есть ли доп поля или нет
+                    string formatJournal = "";
+                    if (articles[j].volume != null || articles[j].number != null)
+                    {
+                        formatJournal = articles[j].journal + " ";
                     }
                     else
                     {
-                        formatNumber = articles[j].number;
+                        formatJournal = articles[j].journal;
                     }
 
-                }
 
-                //Вывод количества страниц
-                string formatPages = "";
-                if (articles[j].pages != null)
-                {
-
-                    formatPages = articles[j].pages;
-                    formatPages = formatPages.Insert(formatPages.Length, " ");
-
-                    if (formatPages.IndexOf("-") != -1)
+                    //Вывод VOLUME + номер журнала
+                    string formatVolume = "";
+                    if (articles[j].volume != null)
                     {
-                        formatPages = formatPages.Replace("-", "–");
+                        formatVolume = articles[j].volume;
                     }
+
+                    string formatNumber = "";
+                    if (articles[j].number != null)
+                    {
+                        if (articles[j].volume != null)
+                        {
+                            formatNumber = "()";
+                            formatNumber = formatNumber.Insert(1, articles[j].number);
+                        }
+                        else
+                        {
+                            formatNumber = articles[j].number;
+                        }
+
+                    }
+
+                    //Вывод количества страниц
+                    string formatPages = "";
+                    if (articles[j].pages != null)
+                    {
+
+                        formatPages = articles[j].pages;
+                        formatPages = formatPages.Insert(formatPages.Length, " ");
+
+                        if (formatPages.IndexOf("-") != -1)
+                        {
+                            formatPages = formatPages.Replace("-", "–");
+                        }
+                    }
+
+                    //Вывод года
+                    string formatYear = "";
+                    if (articles[j].year != null)
+                    {
+                        formatYear = "().";
+                        formatYear = formatYear.Insert(1, articles[j].year.Remove(4));
+                    }
+
+                    wordParag.Range.Font.Name = "Times New Roman";
+                    wordParag.Range.Font.Size = 14;
+                    wordParag.Range.Text = authors + articles[j].title + ". " + formatJournal + formatVolume + formatNumber + ", " + formatPages + formatYear;
+                    wordDoc.Paragraphs.Add();
                 }
 
-                //Вывод года
-                string formatYear = "";
-                if (articles[j].year != null)
-                {
-                    formatYear = "().";
-                    formatYear = formatYear.Insert(1, articles[j].year.Remove(4));
-                }
-
-                wordParag.Range.Font.Name = "Times New Roman";
-                wordParag.Range.Font.Size = 14;
-                wordParag.Range.Text = authors + articles[j].title + ". " + formatJournal + formatVolume + formatNumber + ", " + formatPages + formatYear;
-                wordDoc.Paragraphs.Add();
             }
 
 
@@ -508,63 +556,86 @@ namespace ScopusWebApplication.Save
         public void BibTex(List<Article> articles)
         {
             var database = new BibTeXDatabase();
-            BibTeXArticle[] articlesBibtex = new BibTeXArticle[articles.Count];
+            int flag = 0;
+            //Подсчет количества выбранных пользователем статей для инициализации переменной статей для библиотеки бибтех
+            //при помощи переменной флаг
+            for (int i = 0; i< articles.Count; i++)
+            {
+                if(articles[i].choose == true)
+                {
+                    flag++;
+                }
+            }
+            //инициализация переменной
+            BibTeXArticle[] articlesBibtex = new BibTeXArticle[flag];
 
+            //заполнение статьями
+            flag = 0;
             for (int i = 0; i < articles.Count; i++)
             {
-                string authors = "";
-                int lenAuthorsArray = articles[i].authors.Length;
-                for (int j = 0; j < lenAuthorsArray; j++)
+                if (articles[i].choose == false)
                 {
-
-                    authors = authors.Insert(authors.Length, articles[i].authors[j].Surname + ", " + articles[i].authors[j].CeInitials + " ");
-
+                    continue;
                 }
-
-                string formatPages = "";
-                if (articles[i].pages != null)
+                else
                 {
-
-                    formatPages = articles[i].pages;
-
-                    if (formatPages.IndexOf("-") != -1)
+                    string authors = "";
+                    int lenAuthorsArray = articles[i].authors.Length;
+                    for (int j = 0; j < lenAuthorsArray; j++)
                     {
-                        formatPages = formatPages.Replace("-", "–");
+
+                        authors = authors.Insert(authors.Length, articles[i].authors[j].Surname + ", " + articles[i].authors[j].CeInitials + " ");
+
                     }
-                }
 
-                string month = "";
-                string year = "";
-                if (articles[i].year != null)
-                {
-                    year = articles[i].year.Remove(4);
-                    month = articles[i].year.Substring(5, 2);
-                }
+                    string formatPages = "";
+                    if (articles[i].pages != null)
+                    {
 
-                string volume = "";
-                if (articles[i].volume != null)
-                {
-                    volume = articles[i].volume;
-                }
+                        formatPages = articles[i].pages;
 
-                string number = "";
-                if (articles[i].number != null)
-                {
-                    number = articles[i].number;
-                }
+                        if (formatPages.IndexOf("-") != -1)
+                        {
+                            formatPages = formatPages.Replace("-", "–");
+                        }
+                    }
 
-                articlesBibtex[i] = new BibTeXArticle
-                {
-                    Title = articles[i].title,
-                    Year = year,
-                    Volume = volume,
-                    Journal = articles[i].journal,
-                    Number = number,
-                    Author = authors,
-                    Pages = formatPages,
-                    Month = numberMonthInBibtex(month),
-                    CitationKey = i + GetCitationKey(articles[i])
-                };
+                    string month = "";
+                    string year = "";
+                    if (articles[i].year != null)
+                    {
+                        year = articles[i].year.Remove(4);
+                        month = articles[i].year.Substring(5, 2);
+                    }
+
+                    string volume = "";
+                    if (articles[i].volume != null)
+                    {
+                        volume = articles[i].volume;
+                    }
+
+                    string number = "";
+                    if (articles[i].number != null)
+                    {
+                        number = articles[i].number;
+                    }
+
+                    articlesBibtex[flag] = new BibTeXArticle
+                    {
+                        Title = articles[i].title,
+                        Year = year,
+                        Volume = volume,
+                        Journal = articles[i].journal,
+                        Number = number,
+                        Author = authors,
+                        Pages = formatPages,
+                        Month = numberMonthInBibtex(month),
+                        CitationKey = flag + GetCitationKey(articles[i])
+                    };
+
+                    flag++;
+                }
+                
             }
 
             foreach (var i in articlesBibtex)
@@ -578,9 +649,9 @@ namespace ScopusWebApplication.Save
 
             try
             {
-                using (StreamWriter sw = new StreamWriter(writePath, true, System.Text.Encoding.Default))
+                using (StreamWriter sw = new StreamWriter(writePath, false, System.Text.Encoding.Default))
                 {
-                    sw.WriteLine(text);
+                    sw.Write(text);
                 }
 
 
@@ -664,5 +735,5 @@ namespace ScopusWebApplication.Save
             }
         }
     }
-        
+
 }
