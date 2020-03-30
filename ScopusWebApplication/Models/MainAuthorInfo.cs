@@ -18,5 +18,18 @@ namespace ScopusWebApplication.Models
         public string AffiliationName { get; set; }
         public string AffiliationCity { get; set; }
         public string AffiliationCountry { get; set; }
+        public MainAuthorInfo()
+        {
+            Surname = "-";
+            GivenName = "-";
+            PrismUrl = "-";
+            Id = "-";
+            Eid = "-";
+            Orcid = "-";
+            DocumentCount = "-";
+            AffiliationName = "-";
+            AffiliationCity = "-";
+            AffiliationCountry = "-";
+        }
     }
 }

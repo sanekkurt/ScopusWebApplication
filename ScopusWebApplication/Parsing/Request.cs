@@ -17,15 +17,24 @@ namespace ScopusWebApplication.Parsing
             req.UserAgent = "Mozilla/5.0 (Windows NT 10.0; WOW64; rv:17.0) Gecko/20100101 Firefox/17.0";
             req.Headers.Add("X-ELS-APIKey", "a2cf9f5c8b129f08875fc06823810ffc");
             req.Accept = "application/json";
-            HttpWebResponse resp = (HttpWebResponse)req.GetResponse();
-            Stream stream = resp.GetResponseStream();
-            StreamReader sr = new StreamReader(stream);
-
-            string text = sr.ReadToEnd();
-            resp.Close();
-            sr.Close();
-            using (var sw = new StreamWriter("D://page1.html"))
-                sw.Write(text);
+            string text = "";
+            try
+            {
+                HttpWebResponse resp = (HttpWebResponse)req.GetResponse();
+                Stream stream = resp.GetResponseStream();
+                StreamReader sr = new StreamReader(stream);
+                text = sr.ReadToEnd();
+                resp.Close();
+                sr.Close();
+                using (var sw = new StreamWriter("D://page1.html"))
+                    sw.Write(text);
+            }
+            catch (WebException)
+            {
+                text = null;
+            }
+            
+            
             return text;
 
         }
@@ -35,20 +44,40 @@ namespace ScopusWebApplication.Parsing
             var reb = new Request();
 
             var mainAuthor = reb.get_http("https://api.elsevier.com/content/search/author?query=AU-ID(" + id + ")&field=surname,given-name,prism:url,eid,orcid,document-count,affiliation-name,affiliation-city,affiliation-country,dc:identifier");
-
-            var jsonWebDataMainAuthorInfo = JsonWebDataMainAuthorInfo.FromJson(mainAuthor);
-
             MainAuthorInfo mainAuthorInfo = new MainAuthorInfo();
-            mainAuthorInfo.Surname = jsonWebDataMainAuthorInfo.SearchResults.Entry[0].PreferredName.Surname;
-            mainAuthorInfo.GivenName = jsonWebDataMainAuthorInfo.SearchResults.Entry[0].PreferredName.GivenName;
-            mainAuthorInfo.Eid = jsonWebDataMainAuthorInfo.SearchResults.Entry[0].Eid;
-            mainAuthorInfo.Orcid = jsonWebDataMainAuthorInfo.SearchResults.Entry[0].Orcid;
-            mainAuthorInfo.PrismUrl = jsonWebDataMainAuthorInfo.SearchResults.Entry[0].PrismUrl;
-            mainAuthorInfo.DocumentCount = jsonWebDataMainAuthorInfo.SearchResults.Entry[0].DocumentCount.ToString();
-            mainAuthorInfo.AffiliationCity = jsonWebDataMainAuthorInfo.SearchResults.Entry[0].AffiliationCurrent.AffiliationCity;
-            mainAuthorInfo.AffiliationCountry = jsonWebDataMainAuthorInfo.SearchResults.Entry[0].AffiliationCurrent.AffiliationCountry;
-            mainAuthorInfo.AffiliationName = jsonWebDataMainAuthorInfo.SearchResults.Entry[0].AffiliationCurrent.AffiliationName;
-            mainAuthorInfo.Id = jsonWebDataMainAuthorInfo.SearchResults.Entry[0].DcIdentifier.Remove(0, 10);
+            if (mainAuthor != null)
+            {
+                var jsonWebDataMainAuthorInfo = JsonWebDataMainAuthorInfo.FromJson(mainAuthor);
+                try
+                {
+                    mainAuthorInfo.Surname = jsonWebDataMainAuthorInfo.SearchResults.Entry[0].PreferredName.Surname;
+                    mainAuthorInfo.GivenName = jsonWebDataMainAuthorInfo.SearchResults.Entry[0].PreferredName.GivenName;
+                    mainAuthorInfo.Eid = jsonWebDataMainAuthorInfo.SearchResults.Entry[0].Eid;
+                    mainAuthorInfo.Orcid = jsonWebDataMainAuthorInfo.SearchResults.Entry[0].Orcid;
+                    mainAuthorInfo.PrismUrl = jsonWebDataMainAuthorInfo.SearchResults.Entry[0].PrismUrl;
+                    mainAuthorInfo.DocumentCount = jsonWebDataMainAuthorInfo.SearchResults.Entry[0].DocumentCount.ToString();
+                    mainAuthorInfo.AffiliationCity = jsonWebDataMainAuthorInfo.SearchResults.Entry[0].AffiliationCurrent.AffiliationCity;
+                    mainAuthorInfo.AffiliationCountry = jsonWebDataMainAuthorInfo.SearchResults.Entry[0].AffiliationCurrent.AffiliationCountry;
+                    mainAuthorInfo.AffiliationName = jsonWebDataMainAuthorInfo.SearchResults.Entry[0].AffiliationCurrent.AffiliationName;
+                    mainAuthorInfo.Id = jsonWebDataMainAuthorInfo.SearchResults.Entry[0].DcIdentifier.Remove(0, 10);
+                }
+                catch (NullReferenceException)
+                {
+                    mainAuthorInfo.Surname = "-";
+                    mainAuthorInfo.GivenName = "-";
+                    mainAuthorInfo.Eid = "-";
+                    mainAuthorInfo.Orcid = "-";
+                    mainAuthorInfo.PrismUrl = "-";
+                    mainAuthorInfo.DocumentCount = "-";
+                    mainAuthorInfo.AffiliationCity = "-";
+                    mainAuthorInfo.AffiliationCountry = "-";
+                    mainAuthorInfo.AffiliationName = "-";
+                    mainAuthorInfo.Id = "-";
+                }                
+
+            }
+           
+            
             return mainAuthorInfo;
         }
 
