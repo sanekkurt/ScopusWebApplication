@@ -9,5 +9,10 @@ namespace ScopusWebApplication.Models
     {
         public string Surname { get; set; }
         public string CeInitials { get; set; }
+        public bool MainAuthor { get; set; }
+        public AuthorInArticle()
+        {
+            MainAuthor = false;
+        }
     }
 }

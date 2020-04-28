@@ -99,6 +99,12 @@ namespace ScopusWebApplication.Parsing
                 dcIdentifier[i] = jsonWebData.SearchResults.Entry[i].DcIdentifier.Remove(0, 10);
             }
 
+            var mainAuthor = reb.get_http("https://api.elsevier.com/content/search/author?query=AU-ID(" + id + ")&field=surname,given-name,prism:url,eid,orcid,document-count,affiliation-name,affiliation-city,affiliation-country,dc:identifier");
+
+            var jsonWebDataMainAuthorInfo = JsonWebDataMainAuthorInfo.FromJson(mainAuthor);
+
+            mainAuthor = jsonWebDataMainAuthorInfo.SearchResults.Entry[0].PreferredName.Surname;
+
             List<Article> articles = new List<Article>(len);
 
 
@@ -119,6 +125,10 @@ namespace ScopusWebApplication.Parsing
                     article.authors[j] = new AuthorInArticle();
                     article.authors[j].CeInitials = jsonWebDataArticle.AbstractsRetrievalResponse.Authors.Author[j].CeInitials;
                     article.authors[j].Surname = jsonWebDataArticle.AbstractsRetrievalResponse.Authors.Author[j].CeSurname;
+                    if (article.authors[j].Surname == mainAuthor)
+                    {
+                        article.authors[j].MainAuthor = true;
+                    }
                 }
 
                 try

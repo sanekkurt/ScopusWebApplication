@@ -27,6 +27,7 @@
                     {
                         <li>Инициалы: @Html.EditorFor(m => m[i].authors[j].CeInitials)</li>
                         <li>Фамилия автора: @Html.EditorFor(m => m[i].authors[j].Surname)</li>
+                        <li>@Html.EditorFor(m => m[i].authors[j].MainAuthor)</li>
                     }
 
                     <li>Название статьи: @Html.EditorFor(m => m[i].title)</li>
