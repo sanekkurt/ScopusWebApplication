@@ -221,18 +221,45 @@ namespace ScopusWebApplication.Save
                 }
                 else
                 {
-                    //Вывод всех авторов в одну строку, только наоборот и с дополнительными косыми знаками
+                    //Вывод всех авторов в одну строку. Форматирование вида строки происходит с учетом их количества
                     string authors = "";
                     int lenAuthorsArray = articles[j].authors.Length;
-                    for (int i = 0; i < lenAuthorsArray; i++)
+                    if (lenAuthorsArray > 1 && lenAuthorsArray < 7)
                     {
-                        if (i != lenAuthorsArray - 1)
+                        for (int i = 0; i < lenAuthorsArray; i++)
                         {
-                            authors = authors.Insert(authors.Length, articles[j].authors[i].CeInitials + " " + articles[j].authors[i].Surname + ", ");
+                            if (i != lenAuthorsArray - 1)
+                            {
+                                authors = authors.Insert(authors.Length, articles[j].authors[i].CeInitials + " " + articles[j].authors[i].Surname + ", ");
+                            }
+                            else
+                            {
+                                authors = authors.Insert(authors.Length, "and " + articles[j].authors[i].CeInitials + " " + articles[j].authors[i].Surname + ", ");
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (lenAuthorsArray == 1)
+                        {
+                            for (int i = 0; i < lenAuthorsArray; i++)
+                            {
+                                authors = authors.Insert(authors.Length, articles[j].authors[i].CeInitials + " " + articles[j].authors[i].Surname + ", ");
+                            }
                         }
                         else
                         {
-                            authors = authors.Insert(authors.Length, "and " + articles[j].authors[i].CeInitials + " " + articles[j].authors[i].Surname + ", ");
+                            for (int i = 0; i < 6; i++)
+                            {
+                                if (i != 6 - 1)
+                                {
+                                    authors = authors.Insert(authors.Length, articles[j].authors[i].CeInitials + " " + articles[j].authors[i].Surname + ", ");
+                                }
+                                else
+                                {
+                                    authors = authors.Insert(authors.Length, articles[j].authors[i].CeInitials + " " + articles[j].authors[i].Surname + " et. al. ");
+                                }
+                            }
                         }
                     }
 
@@ -307,18 +334,45 @@ namespace ScopusWebApplication.Save
                 }
                 else
                 {
-                    //Вывод всех авторов в одну строку, только наоборот и с дополнительными косыми знаками
+                    //Вывод всех авторов в одну строку. Форматирование вида строки происходит с учетом их количества
                     string authors = "";
                     int lenAuthorsArray = articles[j].authors.Length;
-                    for (int i = 0; i < lenAuthorsArray; i++)
+                    if (lenAuthorsArray > 1 && lenAuthorsArray < 7)
                     {
-                        if (i != lenAuthorsArray - 1)
+                        for (int i = 0; i < lenAuthorsArray; i++)
                         {
-                            authors = authors.Insert(authors.Length, articles[j].authors[i].CeInitials + " " + articles[j].authors[i].Surname + ", ");
+                            if (i != lenAuthorsArray - 1)
+                            {
+                                authors = authors.Insert(authors.Length, articles[j].authors[i].CeInitials + " " + articles[j].authors[i].Surname + ", ");
+                            }
+                            else
+                            {
+                                authors = authors.Insert(authors.Length, "and " + articles[j].authors[i].CeInitials + " " + articles[j].authors[i].Surname + ", ");
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (lenAuthorsArray == 1)
+                        {
+                            for (int i = 0; i < lenAuthorsArray; i++)
+                            {
+                                authors = authors.Insert(authors.Length, articles[j].authors[i].CeInitials + " " + articles[j].authors[i].Surname + ", ");
+                            }
                         }
                         else
                         {
-                            authors = authors.Insert(authors.Length, "and " + articles[j].authors[i].CeInitials + " " + articles[j].authors[i].Surname + ", ");
+                            for (int i = 0; i < 6; i++)
+                            {
+                                if (i != 6 - 1)
+                                {
+                                    authors = authors.Insert(authors.Length, articles[j].authors[i].CeInitials + " " + articles[j].authors[i].Surname + ", ");
+                                }
+                                else
+                                {
+                                    authors = authors.Insert(authors.Length, articles[j].authors[i].CeInitials + " " + articles[j].authors[i].Surname + " et. al. ");
+                                }
+                            }
                         }
                     }
 
