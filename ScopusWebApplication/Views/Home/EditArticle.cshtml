@@ -16,9 +16,9 @@
     for (int i = 0; i < Model.Count; i++)
     {
         <div class="container">
-            @Html.EditorFor(m => m[i].choose)
+
             <div class="header">
-                <p style="cursor:pointer">@Model[i].title <span class="down_arrow">▼</span></p>
+                <p style="cursor:pointer">@Html.EditorFor(m => m[i].choose) <span class="title_article">@Model[i].title <span class="down_arrow">▼</span></span> </p>
             </div>
 
             <div class="content" style="display: none">
@@ -44,13 +44,14 @@
         </div>
     }
 
-
     <script type="text/javascript">
-        $(".header").click(function () {
+        $(".title_article").click(function () {
 
             var header = $(this);
             //getting the next element
-            var content = header.next();
+            var content = header.parent();
+            content = content.parent();
+            content = content.next();
             //open up the content needed - toggle the slide- if visible, slide up, if not slidedown.
             content.slideToggle(500, function () {
                 header.find("span").text(function () {
@@ -68,6 +69,31 @@
 
 
     </script>
+
+    @*<script type="text/javascript">
+            $(".header").click(function () {
+
+                var header = $(this);
+                //getting the next element
+                var content = header.next();
+                //open up the content needed - toggle the slide- if visible, slide up, if not slidedown.
+                content.slideToggle(500, function () {
+                    header.find("span").text(function () {
+                        var t = "";
+                        if (content.is(":visible")) {
+                            t = "▲";
+                        }
+                        else {
+                            t = "▼";
+                        }
+                        return t;
+                    });
+                });
+            });
+
+
+        </script>*@
+
 
     <select name="typeOutput">
         <option value="gost">ГОСТ 7.1-2003 + ГОСТ Р 7.0.5-2008</option>
