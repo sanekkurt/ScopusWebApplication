@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using ScopusWebApplication.Models;
 using QuickType;
+using System.Xml.Serialization;
 
 namespace ScopusWebApplication.Parsing
 {
@@ -41,7 +42,7 @@ namespace ScopusWebApplication.Parsing
 
         public MainAuthorInfo Get_Main_Author_Info_By_author_id(string id)
         {
-            var reb = new Request();
+            /*var reb = new Request();
 
             var mainAuthor = reb.get_http("https://api.elsevier.com/content/search/author?query=AU-ID(" + id + ")&field=surname,given-name,prism:url,eid,orcid,document-count,affiliation-name,affiliation-city,affiliation-country,dc:identifier");
             MainAuthorInfo mainAuthorInfo = new MainAuthorInfo();
@@ -75,15 +76,21 @@ namespace ScopusWebApplication.Parsing
                     mainAuthorInfo.Id = "-";
                 }                
 
+            }*/
+            XmlSerializer formatter = new XmlSerializer(typeof(MainAuthorInfo));
+
+            MainAuthorInfo mainAuthorInfoXml = new MainAuthorInfo();
+            using (FileStream fs = new FileStream("D://safiullinInfo.xml", FileMode.OpenOrCreate))
+            {
+                mainAuthorInfoXml = (MainAuthorInfo)formatter.Deserialize(fs);
             }
-           
-            
-            return mainAuthorInfo;
+            return mainAuthorInfoXml;
+            //return mainAuthorInfo;
         }
 
         public List<Article> Get_article_by_author_id(string id)
         {
-            int len; // количество ссылок на статьи в идентификаторе автора
+            /*int len; // количество ссылок на статьи в идентификаторе автора
             string data;
             var reb = new Request();
 
@@ -204,8 +211,17 @@ namespace ScopusWebApplication.Parsing
                 }
 
                 articles.Add(article);
+            }*/
+            XmlSerializer formatter = new XmlSerializer(typeof(List<Article>));
+
+
+            List<Article> art = new List<Article>();
+            using (FileStream fs = new FileStream("D://safiullin.xml", FileMode.OpenOrCreate))
+            {
+                art = (List<Article>)formatter.Deserialize(fs);
             }
-            return articles;
+            return art;
+            //return articles;
         }
     }
 }

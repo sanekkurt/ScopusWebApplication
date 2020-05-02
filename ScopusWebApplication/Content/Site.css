@@ -1,24 +1,79 @@
-﻿body {
-    padding-top: 50px;
-    padding-bottom: 20px;
+﻿@font-face {
+    font-family: Myriad_Pro; /* Гарнитура шрифта */
+    src: url(Fonts/Myriad_Pro.ttf); /* Путь к файлу со шрифтом */
 }
 
+body {
+    background-image: url(Images/background2.png);
+    font-family: Myriad_Pro, 'Myriad Pro', Italic;
+}
+
+.wrapper {
+    padding-right: 12%;
+    padding-left: 12%;
+}
+
+header {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    margin-left: 1%;
+    margin-right: 1%;
+    margin-top: 1%;
+}
+
+.header_ul {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    padding-left: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+    .header_ul li {
+        text-align: right;
+        margin-top: auto;
+        margin-bottom: auto;
+        font-family: Myriad_Pro, 'Myriad Pro', Bold;
+        font-size: 18px;
+    }
+
+li {
+    list-style-type: none; /* Убираем маркеры */
+}
+
+a {
+    color: white;
+}
+
+    a:visited {
+        color: white;
+    }
+
+    a:active {
+        color: white; /* Цвет активных ссылок */
+    }
+
+    a:hover {
+        text-decoration: none;
+    }
+
+
 /* Set padding to keep content from hitting the edges */
-.body-content {
+/*.body-content {
     padding-left: 15px;
     padding-right: 15px;
-}
+}*/
 
 /* Override the default bootstrap behavior where horizontal description lists 
    will truncate terms that are too long to fit in the left column 
 */
-.dl-horizontal dt {
+/*.dl-horizontal dt {
     white-space: normal;
-}
+}*/
 
 /* Set width on the form input elements since they're 100% wide by default */
-input,
+/*input,
 select,
 textarea {
     max-width: 280px;
-}
+}*/
