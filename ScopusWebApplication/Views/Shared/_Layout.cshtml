@@ -30,23 +30,37 @@
             </div>
         </div>*@
     <header>
-        <a href="https://www.scopus.com"><img title="www.scopus.com" src="~/Content/Images/Scopus_logo.png" width="107" height="42" alt="lorem" /></a>
-        <ul class="header_ul">
-            <li>@Html.ActionLink("Домашняя страница", "Index", "Home")</li>
-            <li>@Html.ActionLink("О программе", "About", "Home")</li>
-            <li>@Html.ActionLink("Контакт", "Contact", "Home")</li>
+        <a href="https://www.scopus.com"><img id="ScopusIMG" title="www.scopus.com" src="~/Content/Images/Scopus_logo.png" width="107" height="42" alt="lorem" /></a>
+        <ul class="header_ul" id="myTopnav">
+            <li id = "HomePage">@Html.ActionLink("Домашняя страница", "Index", "Home")</li>
+            <li id = "AboutProgramPage">@Html.ActionLink("О программе", "About", "Home")</li>
+            <li id = "ContactPage">@Html.ActionLink("Контакт", "Contact", "Home")</li>
+            <li id = "LiMenu" class="iconMenu"><a href="#" id="menu" class="icon">&#9776;</a></li>
         </ul>
     </header>
     <div class="wrapper">
-
         <div class="body-content">
             @RenderBody()
-            <footer>
-                <p>&copy; @DateTime.Now.Year</p>
-            </footer>
         </div>
     </div>
+    <footer class="footer navbar-fixed-bottom">
+        <p>&copy; @DateTime.Now.Year</p>
+    </footer>
 
+    <script type="text/javascript">
+        window.onload = function () {
+            menu.onclick = function myFunction() {
+                var x = document.getElementById('myTopnav');
+
+                if (x.className === "header_ul") {
+                    x.className += " responsive";
+                }
+                else {
+                    x.className = "header_ul";
+                }
+            }
+        }
+    </script>
 
     @Scripts.Render("~/bundles/jquery")
     <script src='@Url.Content("~/Scripts/jquery.unobtrusive-ajax.js")'></script>

@@ -7,7 +7,7 @@
     ViewBag.Title = "EditArticle";
 }
 
-<h3>Полученные статьи автора:</h3>
+<h3>Полученные статьи автора</h3>
 
 
 @using (Html.BeginForm("GetFile", "Home", FormMethod.Post))
@@ -22,29 +22,51 @@
             </div>
 
             <div class="content" style="display: none">
-                <ul>
+                <dl class="dl-horizontal">
                     @for (int j = 0; j < Model[i].authors.Length; j++)
                     {
-                        <li>Инициалы: @Html.EditorFor(m => m[i].authors[j].CeInitials)</li>
-                        <li>Фамилия автора: @Html.EditorFor(m => m[i].authors[j].Surname)</li>
-                        <li>@Html.EditorFor(m => m[i].authors[j].MainAuthor)</li>
+                        <dt>Инициалы:</dt>
+                        <dd>@Html.EditorFor(m => m[i].authors[j].CeInitials)</dd>
+                        <dt>Фамилия автора:</dt>
+                        <dd>@Html.EditorFor(m => m[i].authors[j].Surname)</dd>
+                        @Html.EditorFor(m => m[i].authors[j].MainAuthor, new { htmlAttributes = new { @class = "hidden" } })
                     }
 
-                    <li>Название статьи: @Html.EditorFor(m => m[i].title)</li>
-                    <li>Название журнала: @Html.EditorFor(m => m[i].journal)</li>
-                    <li>Год: @Html.EditorFor(m => m[i].year)</li>
-                    <li>Том журнала или книги: @Html.EditorFor(m => m[i].volume)</li>
-                    <li>Номер журнала: @Html.EditorFor(m => m[i].number)</li>
-                    <li>Номера страниц: @Html.EditorFor(m => m[i].pages)</li>
-                    <li>Месяц публикации: @Html.EditorFor(m => m[i].month)</li>
-                    <li>Цифровой идентификатор: @Html.EditorFor(m => m[i].doi)</li>
+                    <dt>Название статьи:</dt>
+                    <dd>@Html.EditorFor(m => m[i].title)</dd>
+                    <dt>Название журнала:</dt>
+                    <dd>@Html.EditorFor(m => m[i].journal)</dd>
+                    <dt>Год:</dt>
+                    <dd>@Html.EditorFor(m => m[i].year)</dd>
+                    <dt>Том журнала или книги:</dt>
+                    <dd>@Html.EditorFor(m => m[i].volume)</dd>
+                    <dt>Номер журнала:</dt>
+                    <dd>@Html.EditorFor(m => m[i].number)</dd>
+                    <dt>Номера страниц:</dt>
+                    <dd>@Html.EditorFor(m => m[i].pages)</dd>
+                    <dt>Месяц публикации:</dt>
+                    <dd>@Html.EditorFor(m => m[i].month)</dd>
+                    <dt>Цифр. идентификатор:</dt>
+                    <dd>@Html.EditorFor(m => m[i].doi)</dd>
                     <p></p>
-                </ul>
+                </dl>
             </div>
         </div>
     }
 
     <script type="text/javascript">
+        $(document).ready(function () {            
+
+            $(".wrapper").css({
+                "grid-template-columns": "100%"
+            })
+
+            $(".body-content").animate({
+                maxWidth: '100%',
+                marginTop: '5%'
+            }, 500)
+        });
+
         $(".title_article").click(function () {
 
             var header = $(this);
@@ -67,11 +89,12 @@
             });
         });
 
+        //$(".check-box").attr('class', 'custom-control-input')
 
     </script>
 
 
-    <select name="typeOutput">
+    <select name="typeOutput" class="form-control">
         <option value="gost">ГОСТ 7.1-2003 + ГОСТ Р 7.0.5-2008</option>
         <option value="vak">ВАК-формат</option>
         <option value="IEEE_conferences">IEEE конференции</option>
@@ -80,6 +103,6 @@
         <option value="springerLNCS">Springer LNCS</option>
         <option value="BibTex">BibTex</option>
     </select>
-    <input type="submit" value="Скачать" />
+    <input class="btn btn-success" type="submit" value="Скачать" />
 }
 

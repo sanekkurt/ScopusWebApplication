@@ -6,11 +6,8 @@
 body {
     background-image: url(Images/background2.png);
     font-family: Myriad_Pro, 'Myriad Pro', Italic;
-}
-
-.wrapper {
-    padding-right: 12%;
-    padding-left: 12%;
+    min-height: 100%;
+    background-attachment: fixed;
 }
 
 header {
@@ -23,19 +20,53 @@ header {
 
 .header_ul {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: 50% 25% 25%;
     padding-left: 0;
     margin-top: 0;
     margin-bottom: 0;
 }
 
     .header_ul li {
-        text-align: right;
+        text-align: center;
         margin-top: auto;
         margin-bottom: auto;
         font-family: Myriad_Pro, 'Myriad Pro', Bold;
         font-size: 18px;
     }
+
+.wrapper {
+    margin-right: 12%;
+    margin-left: 12%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.body-content {
+    background-color: white;
+    border-radius: 3px;
+    box-shadow: 0 0 5px;
+    max-width: 620px;
+    padding: 0% 2% 2% 2%;
+    margin-top: 10%;
+}
+
+    .body-content h3 {
+        text-align: center;
+        font-weight: bold;
+    }
+
+    .body-content h4 {
+        text-align: center;
+    }
+
+.input-group {
+    display: grid;
+    grid-template-columns: 1fr 150px;
+}
+
+#form_findArticle {
+    text-align: right;
+}
 
 li {
     list-style-type: none; /* Убираем маркеры */
@@ -57,7 +88,126 @@ a {
         text-decoration: none;
     }
 
+.icon {
+    display: none;
+}
 
+.container {
+    width: inherit;
+}
+
+#loadingIMG {
+    width: 26px;
+    height: 26px;
+}
+
+#loadingArticlesAnimation {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+select {
+    margin-left: 15px;
+}
+
+footer {
+    margin-left: 1%;
+    margin-right: 1%;
+}
+.hidden.check-box {
+    display: none;
+}
+
+.form-control {
+    width: auto;
+    display: inline;
+}
+
+footer p {
+    color: white;
+}
+
+@media screen and (max-width: 1109px) {
+    .wrapper {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media screen and (max-width: 848px) {
+    header {
+        grid-template-columns: 25% 75%;
+    }
+}
+
+@media screen and (max-width: 570px) {
+
+    .header_ul {
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(3, 1fr);
+    }
+
+        .header_ul li {
+            text-align: right;
+        }
+    /*.header_ul a {
+        display: none;
+    }
+
+    .header_ul li a.icon {
+        display: block;
+        font-size: 25px;
+    }
+
+    .header_ul {
+        grid-template-columns: 75% 25%;
+        grid-template-rows: repeat(3, 26px);
+        grid-template-areas: "post-1 post-4" 
+                             "post-2 post-4" 
+                             "post-3 post-4";
+    }
+
+    #HomePage {
+        grid-area: post-1;
+    }
+
+    #AboutProgramPage {
+        grid-area: post-2;
+    }
+
+    #ContactPage {
+        grid-area: post-3;
+    }
+
+    #LiMenu {
+        grid-area: post-4;
+    }
+
+    .header_ul.responsive a {
+        display: block;        
+    }
+
+        .header_ul.responsive {            
+            position: relative;
+            top: 50px;
+            left: -150px;
+        }
+
+            .header_ul.responsive .iconMenu {
+                position: absolute;
+                top: -50px;
+                right: 150px;
+            }
+
+
+
+    
+
+    #ScopusIMG {
+        margin-left: 5px;
+    }*/
+
+}
 /* Set padding to keep content from hitting the edges */
 /*.body-content {
     padding-left: 15px;
